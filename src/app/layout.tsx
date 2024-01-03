@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { ClerkProvider } from '@clerk/nextjs'
 import './globals.css'
+import SideBar from '@/components/menu/SideBar'
+import { cn } from '@/lib/utils'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,8 +18,18 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body
+          className={cn(
+            inter.className,
+            'min-h-screen grid grid-flow-col grid-cols-[max-content,1fr]'
+          )}
+        >
+          <SideBar />
+          <main>{children}</main>
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }
